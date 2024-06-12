@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-[#444444];
+}
+
+.download_btn {
+  @apply relative h-14 w-44 rounded-full px-6 font-sans text-xl text-white;
+  box-shadow:
+    0px 0px 2px 2px #353535 inset,
+    -3px 4px 3px #d0d0d2 inset,
+    -3px -3px 2px #d0d0d2 inset,
+    -3px 10px 16px -6px #696868,
+    18px -18px 25px -14px #242328 inset;
+  background: linear-gradient(145deg, #2b2a35, #46444b);
+  transition: all 0.3s;
+}
+
+.btn_hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0px 0px 2px 2px #353535 inset,
+    -3px 4px 3px #d0d0d2 inset,
+    -3px -3px 2px #d0d0d2 inset,
+    -3px 15px 26px -6px #696868,
+    18px -18px 25px -14px #242328 inset;
+}
+
+.download_btn span {
+  opacity: 0.9;
+  font-weight: 500;
+  color: transparent;
+  background-clip: text;
+  --webkit-background-clip: text;
+  background-image: linear-gradient(90deg, #ffffff, #e2e0e0);
+}
+
+.download_btn::before {
+  @apply absolute left-0 top-0 size-12 bg-white;
+  content: "";
+  filter: blur(13px);
+  position: absolute;
+  left: 19%;
+  top: -18px;
+  rotate: -63deg;
+  width: 1rem;
+  height: 4rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255, 255, 255);
+}
+
+.download_btn::after {
+  @apply absolute left-0 top-0 size-12 bg-white;
+  content: "";
+  filter: blur(16px);
+  position: absolute;
+  left: 78%;
+  top: -29px;
+  rotate: -63deg;
+  width: 1rem;
+  height: 4rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(205 205 205);
+}
+
+@keyframes btn_click {
+  0% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+.btn_clicked {
+  animation: btn_click 0.3s;
+}
+
+.progress_bar {
+  box-shadow: 1px 3px 10px black;
+  background: linear-gradient(to right, #ffffff5b 60%, #5e5e5e88);
+}
+
+.progress_bar_full {
+  background: linear-gradient(to right, #ebebee 60%, #9591b6 90%, #fdfdff);
+  box-shadow: 0px 0px 1px 1px white inset;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+    scale: 1.3;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    scale: 1.3;
+  }
+}
+
+.icon {
+  animation: fadeIn 0.5s forwards;
+}
+
+.download_finished {
+  @apply flex w-14 items-center justify-center p-0;
+}
