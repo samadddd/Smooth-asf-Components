@@ -1,85 +1,84 @@
 import { useEffect, useRef, useState } from "react";
 import { FaCircleCheck } from "react-icons/fa6";
 
-function DownloadBtn({}) {
+export default function DownloadBtn() {
   const [progress, setProgress] = useState(0);
-  const btnRef = useRef(null);
-  // const isFinished = progress === 100;
-  const [isFinished, setIsFinished] = useState(progress === 100);
-  const [isDownloading, setIsDownloading] = useState(
-    progress > 0 && progress < 100,
-  );
+  const btnRef = useRef();
+  const progressRef = useRef();
+  const isDownloading = progress > 0 && progress < 100;
+  const isCompleted = progress >= 100;
+  const isNotWorking = !isCompleted && !isDownloading;
 
-  useEffect(() => {
-    const btn = document.querySelector(".download_btn");
-    const progressBar = document.querySelector(".progress_bar > div");
+  function addRemoveClass(el, add, remove) {
+    if (add) el.classList.add(add);
+    if (remove) el.classList.remove(remove);
+  }
 
-    if (progressBar) {
-      progressBar.style.width = `${progress}%`;
-    }
-
-    if (progress === 100) {
-      downloadFinished();
-      setTimeout(() => {
-        btnRef.current.classList.remove("download_finished");
-        console.log("removed");
-        setIsFinished(false);
-        setIsDownloading(false);
-      }, 3000);
-    }
-  }, [progress]);
-
-  function animateOnClick() {
-    btnRef.current.classList.add("btn_clicked");
+  // INCREASING PROGRESS STATE, ADDING BTN_CLICKED CLASS AND REMOVING IT AFTER 2 SECOND
+  function handleClick() {
     const intervalId = setInterval(() => {
-      setProgress((prev) => prev + 5);
-    }, 200);
-
-    if (progress === 100) {
-      clearInterval(intervalId);
-      setIsDownloading(false);
-      setIsFinished(true);
-    }
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(intervalId);
+          return prev;
+        }
+        return prev + 45;
+      });
+    }, 1000);
+    addRemoveClass(btnRef.current, "btn_clicked", "btn_hover");
     setTimeout(() => {
-      btnRef.current.classList.remove("btn_clicked");
-    }, 300);
+      addRemoveClass(btnRef.current, null, "btn_clicked");
+    }, 2000);
   }
 
-  function animateOnMouseOver() {
-    btnRef.current.classList.add("btn_hover");
-  }
+  // SETTING PROGRESS INDICATOR WIDTH BASED ON ACTUAL PROGRESS
+  // useEffect(() => {
+  //   if (progressRef.current) {
+  //     progressRef.current.style.width = `${progress}%`;
+  //   }
+  // }, [progress]);
 
-  function animateOnMouseOut() {
-    btnRef.current.classList.remove("btn_hover");
+useEffect(() => {
+  if (!isDownloading && isCompleted) {
+    btnRef.current.style.cssText = `
+      width: 3.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    `;
+    // Set timeout to reset button style and progress after 2 seconds
+    setTimeout(() => {
+      setProgress(0); // Reset progress
+      addRemoveClass(btnRef.current, null, "btn_clicked"); // Remove 'btn_clicked' class
+      btnRef.current.removeAttribute("style"); // Reset button style
+    }, 2000);
   }
+}, [isDownloading, isCompleted]);
 
-  function downloadFinished() {
-    const buttonElement = btnRef.current;
-    if (buttonElement) {
-      buttonElement.classList.add("download_finished");
-    }
-  }
-
+  // RETURNING JSX
   return (
-    <>
-      <p>{progress}</p>
-      <button
-        className="download_btn"
-        onClick={animateOnClick}
-        onMouseEnter={animateOnMouseOver}
-        onMouseLeave={animateOnMouseOut}
-        ref={btnRef}
-      >
-        {!isDownloading && !isFinished && <span>Download</span>}
-        {isDownloading && (
-          <div className="progress_bar relative h-1.5 w-full rounded-full bg-[#ffffff7c]">
-            <div className={`progress_bar_full absolute h-1.5 rounded`}></div>
-          </div>
-        )}
-        {isFinished && <FaCircleCheck className={`${isFinished && "icon"}`} />}
-      </button>
-    </>
+    <button
+      disabled={isDownloading || isCompleted}
+      ref={btnRef}
+      className="download_btn"
+      onClick={isNotWorking ? handleClick : null}
+      onMouseEnter={() => isNotWorking && addRemoveClass(btnRef.current, "btn_hover")}
+      onMouseLeave={() => addRemoveClass(btnRef.current, null, "btn_hover")}
+    >
+      {/* INITIAL OR IF NOT WORKING */}
+      {!isDownloading && !isCompleted ? <span>Download</span> : null}
+
+      {/* IF DOWNLOADING */}
+      {isDownloading && !isCompleted ? (
+        <div className="progress_track relative h-1.5 w-full rounded-full bg-[#ffffff7c]">
+          <div ref={progressRef} className="progress_bar absolute h-1.5 rounded"></div>
+        </div>
+      ) : null}
+
+      {/* COMPLETION INDICATOR */}
+      {!isDownloading && isCompleted ? <FaCircleCheck className="icon" /> : null}
+    </button>
   );
 }
-
-export default DownloadBtn;
+  

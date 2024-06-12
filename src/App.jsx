@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import DownloadBtn from "./components/DownloadBtn";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
       </h1>
 
       <div className="mx-auto my-10 flex h-96 max-w-[90vw] items-center justify-center bg-white">
-        <DownloadBtn progress={80} />
+        <DownloadBtn  />
       </div>
       <div className="flex justify-center w-full gap-3">
         <button className="p-4 bg-pink-500">{"<"}</button>
