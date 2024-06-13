@@ -16,18 +16,20 @@ export default function DownloadBtn() {
 
   // INCREASING PROGRESS STATE, ADDING BTN_CLICKED CLASS AND REMOVING IT AFTER 2 SECOND
   function handleClick() {
-    const intervalId = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(intervalId);
-          return prev;
-        }
-        return prev + 45;
-      });
-    }, 1000);
+    // const intervalId = setInterval(() => {
+    //   setProgress((prev) => {
+    //     if (prev >= 100) {
+    //       clearInterval(intervalId);
+    //       return prev;
+    //     }
+    //     return prev + 45;
+    //   });
+    // }, 1000);
     addRemoveClass(btnRef.current, "btn_clicked", "btn_hover");
+    setProgress(50);
     setTimeout(() => {
       addRemoveClass(btnRef.current, null, "btn_clicked");
+      setProgress(100);
     }, 2000);
   }
 
