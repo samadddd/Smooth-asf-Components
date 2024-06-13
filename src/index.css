@@ -7,7 +7,7 @@ body {
 }
 
 .download_btn {
-  @apply relative px-6 overflow-hidden font-sans text-xl text-white rounded-full h-14 w-44;
+  @apply relative h-14 w-44 z-10 overflow-hidden rounded-full px-6 font-sans text-xl text-white;
   box-shadow:
     0px 0px 2px 2px #353535 inset,
     -3px 4px 3px #d0d0d2 inset,
@@ -18,9 +18,8 @@ body {
   transition: all 0.3s;
 }
 
-
 .download_btn:disabled {
-cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 .btn_hover {
@@ -43,7 +42,7 @@ cursor: not-allowed;
 }
 
 .download_btn::before {
-  @apply absolute top-0 left-0 bg-white size-12;
+  @apply absolute left-0 top-0 size-12 bg-white;
   content: "";
   filter: blur(13px);
   position: absolute;
@@ -57,7 +56,7 @@ cursor: not-allowed;
 }
 
 .download_btn::after {
-  @apply absolute top-0 left-0 bg-white size-12;
+  @apply absolute left-0 top-0 size-12 bg-white;
   content: "";
   filter: blur(16px);
   position: absolute;
@@ -92,18 +91,18 @@ cursor: not-allowed;
 }
 
 @keyframes progress {
-  from{
+  from {
     width: 0%;
   }
-  to{
+  to {
     width: 100%;
-  } 
+  }
 }
 
 .progress_bar {
   /* transition: all 4s; */
   background: #ebebee;
-  animation: progress 2s cubic-bezier(0.32, 1.11, 1, 1);
+  animation: progress 2s cubic-bezier(0.63, 0, 0.33, 0.99);
 }
 
 @keyframes fadeIn {
@@ -112,17 +111,37 @@ cursor: not-allowed;
     transform: translateY(20px);
     scale: 1.2;
   }
-  100% {
+  25%,90% {
     opacity: 1;
     transform: translateY(0);
     scale: 1.4;
   }
+  100%{
+    opacity: 0;
+    transform: translateX(-20px);
+    scale: 1.4
+  }
 }
 
 .icon {
-  animation: fadeIn 0.5s forwards;
+  animation: fadeIn 2.4s forwards;
 }
 
 .download_finished {
-  @apply flex items-center justify-center p-0 w-14;
+  @apply flex w-14 items-center justify-center p-0;
+}
+
+
+@keyframes chulakian{
+from{
+  transform: scale(0.1);
+  opacity: 0.5;
+}
+to{
+  transform: scale(1);
+  opacity: 0;
+}
+}
+.chulakian{
+animation: chulakian 400ms cubic-bezier(0, 0, 0, 0.96) forwards;
 }

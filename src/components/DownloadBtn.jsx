@@ -60,6 +60,7 @@ useEffect(() => {
 
   // RETURNING JSX
   return (
+    <div className="flex justify-center items-center">
     <button
       disabled={isDownloading || isCompleted}
       ref={btnRef}
@@ -81,6 +82,8 @@ useEffect(() => {
       {/* COMPLETION INDICATOR */}
       {!isDownloading && isCompleted ? <FaCircleCheck className="icon" /> : null}
     </button>
+   {!isDownloading && isCompleted ? <img src="chulakian.png" alt="chulakian" className="chulakian absolute" /> : null}
+      </div>
   );
 }
   
