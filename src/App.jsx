@@ -1,5 +1,5 @@
-
-import DownloadBtn from "./components/DownloadBtn";
+import DownloadBtn from "./components/DownloadBtn/DownloadBtn";
+import PaymentMethod from "./components/PaymentMethod/PaymentMethod";
 
 function App() {
   return (
@@ -9,7 +9,8 @@ function App() {
       </h1>
 
       <div className="mx-auto my-10 flex h-96 max-w-[90vw] items-center justify-center bg-white">
-        <DownloadBtn  />
+        {/* <DownloadBtn /> */}
+        <PaymentMethod /> 
       </div>
       <div className="flex justify-center w-full gap-3">
         <button className="p-4 bg-pink-500">{"<"}</button>
